@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,22 @@ class Product
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Manufacturer", inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $manufacturer;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Supplier", inversedBy="products")
+     */
+    private $supplier;
+
+    public function __construct()
+    {
+        $this->supplier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +86,44 @@ class Product
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getManufacturer(): ?Manufacturer
+    {
+        return $this->manufacturer;
+    }
+
+    public function setManufacturer(?Manufacturer $manufacturer): self
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSupplier(): Collection
+    {
+        return $this->supplier;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->supplier->contains($supplier)) {
+            $this->supplier[] = $supplier;
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        if ($this->supplier->contains($supplier)) {
+            $this->supplier->removeElement($supplier);
+        }
 
         return $this;
     }

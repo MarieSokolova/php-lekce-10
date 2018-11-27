@@ -23,6 +23,18 @@
                 <th>Description</th>
                 <td>{{ product.description }}</td>
             </tr>
+            <tr>
+                <th>Manufacturer</th>
+                <td>{{ product.manufacturer.name }}</td>
+            </tr>
+            <tr>
+                <th>Supplier</th>
+                <td>
+{% for sup in product.supplier %}
+  {{ sup.name }}
+{% endfor %}
+</td>
+            </tr>
         </tbody>
     </table>
 
