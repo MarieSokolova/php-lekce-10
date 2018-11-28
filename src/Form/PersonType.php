@@ -16,8 +16,19 @@ class PersonType extends AbstractType
         $builder
             ->add('name')
             ->add('age')
-            ->add('fathers')
-            ->add('mothers')
+            ->add('fathers', EntityType::class, [
+  'class' => Person::class, 
+  'choice_label' => 'name',
+  'multiple' => true, 
+  'expanded' => true
+  
+])
+            ->add('mothers', EntityType::class, [
+  'class' => Person::class, 
+  'choice_label' => 'name',
+  'multiple' => true, 
+  'expanded' => true
+])
             ->add('sexes', EntityType::class, [
   'class' => Sex::class, 
   'choice_label' => 'name', 

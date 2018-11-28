@@ -20,7 +20,11 @@
             <tr>
                 <td>{{ person.id }}</td>
                 <td>{{ person.name }}</td>
-                <td>{{ person.sex }}</td>
+                <td>
+{% for sex in person.sexes %}
+  {{ sex.name }}
+{% endfor %}
+                </td>
                 <td>{{ person.age }}</td>
                 <td>
                     <a href="{{ path('person_show', {'id': person.id}) }}">show</a>
